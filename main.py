@@ -14,13 +14,6 @@ function make_null () {
 input.onButtonPressed(Button.A, function () {
     button_a = 1
 })
-function create_variables () {
-    var_namen = []
-    for (let Index = 0; Index <= 11; Index++) {
-        var_namen.push("sensor_" + Index + "\"_high\"")
-    }
-    return var_namen
-}
 function calibrate_pins (Pin: number) {
     pins.digitalWritePin(DigitalPin.P8, 1)
     basic.pause(100)
@@ -63,7 +56,6 @@ let sensor_6 = 0
 let sensor_3 = 0
 let sensor_3_low = 0
 let sensor_3_high = 0
-let var_namen: string[] = []
 let button_a = 0
 let sensor_12 = 0
 let sensor_12_low = 0
