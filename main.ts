@@ -1,5 +1,8 @@
 function set_val_null () {
     threshold = 0
+    sensor_12_high = 0
+    sensor_12_low = 0
+    sensor_12 = 0
 }
 function make_null () {
     pins.digitalWritePin(DigitalPin.P8, 0)
@@ -7,6 +10,9 @@ function make_null () {
     pins.digitalWritePin(DigitalPin.P5, 0)
     pins.digitalWritePin(DigitalPin.P6, 0)
 }
+input.onButtonPressed(Button.A, function () {
+    calibrate_pin(8)
+})
 function calibrate_pin (Pin: number) {
     pins.digitalWritePin(DigitalPin.P8, 1)
     basic.pause(100)
@@ -32,6 +38,7 @@ let sensor_12_low = 0
 let sensor_12_high = 0
 let threshold = 0
 make_null()
+set_val_null()
 basic.forever(function () {
     make_null()
     basic.showLeds(`
