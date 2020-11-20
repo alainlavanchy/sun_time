@@ -25,9 +25,10 @@ function calibrate_pin (Pin: number) {
         . . . . .
         . . . . .
         `)
-    basic.pause(100)
+    basic.pause(2000)
     sensor_12_low = pins.analogReadPin(AnalogPin.P0)
     pins.digitalWritePin(DigitalPin.P8, 0)
+    basic.showIcon(IconNames.Yes)
 }
 let sensor_sum = 0
 let sensor_9 = 0
