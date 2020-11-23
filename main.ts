@@ -1,27 +1,34 @@
-function set_val_null () {
+function set_val_null() {
+    
     threshold = 0
     sensor_12_high = 0
     sensor_12_low = 0
     sensor_12 = 0
     button_a = 0
 }
-function make_null () {
+
+function make_null() {
     pins.digitalWritePin(DigitalPin.P8, 0)
     pins.digitalWritePin(DigitalPin.P7, 0)
     pins.digitalWritePin(DigitalPin.P5, 0)
     pins.digitalWritePin(DigitalPin.P6, 0)
 }
-input.onButtonPressed(Button.A, function () {
+
+input.onButtonPressed(Button.A, function on_button_pressed_a() {
+    
     button_a = 1
 })
-function create_variables () {
+function create_variables() {
+    
     var_namen = []
-    for (let Index = 0; Index <= 11; Index++) {
-        var_namen.push("sensor_" + Index + "\"_high\"")
+    for (let Index = 0; Index < 12; Index++) {
+        var_namen.push("sensor_" + ("" + Index) + "\"_high\"")
     }
     return var_namen
 }
-function calibrate_pins (Pin: number) {
+
+function calibrate_pins(Pin: number) {
+    
     pins.digitalWritePin(DigitalPin.P8, 1)
     basic.pause(100)
     sensor_12_high = pins.analogReadPin(AnalogPin.P0)
@@ -57,13 +64,14 @@ function calibrate_pins (Pin: number) {
     basic.showIcon(IconNames.Yes)
     button_a = 0
 }
+
 let sensor_sum = 0
 let sensor_9 = 0
 let sensor_6 = 0
 let sensor_3 = 0
 let sensor_3_low = 0
 let sensor_3_high = 0
-let var_namen: string[] = []
+let var_namen : string[] = []
 let button_a = 0
 let sensor_12 = 0
 let sensor_12_low = 0
@@ -72,7 +80,8 @@ let threshold = 0
 make_null()
 set_val_null()
 calibrate_pins(8)
-basic.forever(function () {
+basic.forever(function on_forever() {
+    
     make_null()
     basic.showLeds(`
         . . . . .
@@ -134,4 +143,5 @@ basic.forever(function () {
     } else {
         basic.showIcon(IconNames.No)
     }
+    
 })
