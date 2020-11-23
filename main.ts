@@ -1,34 +1,27 @@
-function set_val_null() {
-    
+function set_val_null () {
     threshold = 0
     sensor_12_high = 0
     sensor_12_low = 0
     sensor_12 = 0
     button_a = 0
 }
-
-function make_null() {
+function make_null () {
     pins.digitalWritePin(DigitalPin.P8, 0)
     pins.digitalWritePin(DigitalPin.P7, 0)
-    pins.digitalWritePin(DigitalPin.P5, 0)
+    pins.digitalWritePin(DigitalPin.P9, 0)
     pins.digitalWritePin(DigitalPin.P6, 0)
 }
-
-input.onButtonPressed(Button.A, function on_button_pressed_a() {
-    
+input.onButtonPressed(Button.A, function () {
     button_a = 1
 })
-function create_variables() {
-    
+function create_variables () {
     var_namen = []
-    for (let Index = 0; Index < 12; Index++) {
+    for (let Index = 0; Index <= 11; Index++) {
         var_namen.push("sensor_" + ("" + Index) + "\"_high\"")
     }
     return var_namen
 }
-
-function calibrate_pins(Pin: number) {
-    
+function calibrate_pins (Pin: number) {
     pins.digitalWritePin(DigitalPin.P8, 1)
     basic.pause(100)
     sensor_12_high = pins.analogReadPin(AnalogPin.P0)
@@ -64,14 +57,13 @@ function calibrate_pins(Pin: number) {
     basic.showIcon(IconNames.Yes)
     button_a = 0
 }
-
 let sensor_sum = 0
 let sensor_9 = 0
 let sensor_6 = 0
 let sensor_3 = 0
 let sensor_3_low = 0
 let sensor_3_high = 0
-let var_namen : string[] = []
+let var_namen: string[] = []
 let button_a = 0
 let sensor_12 = 0
 let sensor_12_low = 0
@@ -80,8 +72,7 @@ let threshold = 0
 make_null()
 set_val_null()
 calibrate_pins(8)
-basic.forever(function on_forever() {
-    
+basic.forever(function () {
     make_null()
     basic.showLeds(`
         . . . . .
@@ -90,22 +81,22 @@ basic.forever(function on_forever() {
         . . . . .
         . . . . .
         `)
-    pins.digitalWritePin(DigitalPin.P8, 1)
+    pins.digitalWritePin(DigitalPin.P9, 1)
     basic.pause(100)
     sensor_12 = Math.map(pins.analogReadPin(AnalogPin.P0), sensor_12_low, sensor_12_high, 0, 10)
-    pins.digitalWritePin(DigitalPin.P8, 0)
-    pins.digitalWritePin(DigitalPin.P7, 1)
+    pins.digitalWritePin(DigitalPin.P9, 0)
+    pins.digitalWritePin(DigitalPin.P8, 1)
     basic.pause(100)
     sensor_3 = Math.map(pins.analogReadPin(AnalogPin.P0), sensor_3_low, sensor_3_high, 0, 10)
-    pins.digitalWritePin(DigitalPin.P7, 0)
-    pins.digitalWritePin(DigitalPin.P5, 1)
-    basic.pause(100)
-    sensor_6 = pins.analogReadPin(AnalogPin.P0)
-    pins.digitalWritePin(DigitalPin.P5, 0)
+    pins.digitalWritePin(DigitalPin.P8, 0)
     pins.digitalWritePin(DigitalPin.P6, 1)
     basic.pause(100)
-    sensor_9 = pins.analogReadPin(AnalogPin.P0)
+    sensor_6 = pins.analogReadPin(AnalogPin.P0)
     pins.digitalWritePin(DigitalPin.P6, 0)
+    pins.digitalWritePin(DigitalPin.P7, 1)
+    basic.pause(100)
+    sensor_9 = pins.analogReadPin(AnalogPin.P0)
+    pins.digitalWritePin(DigitalPin.P7, 0)
     sensor_sum = sensor_12 + (sensor_3 + (sensor_6 + sensor_9))
     threshold = 0.9 * (sensor_sum / 4)
     if (sensor_12 < threshold) {
@@ -143,5 +134,4 @@ basic.forever(function on_forever() {
     } else {
         basic.showIcon(IconNames.No)
     }
-    
 })
